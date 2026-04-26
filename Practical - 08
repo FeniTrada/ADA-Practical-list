@@ -1,0 +1,56 @@
+import java.util.*;
+
+class Kruskal {
+    static int find(int p[], int i) {
+        while (p[i] != 0)
+            i = p[i];
+        return i;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter vertices: ");
+        int n = sc.nextInt();
+
+        int[][] c = new int[n][n];
+        int[] p = new int[n];
+        int total = 0;
+
+        System.out.println("Enter cost adjacency matrix:");
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < n; j++) {
+                c[i][j] = sc.nextInt();
+                if (c[i][j] == 0)
+                    c[i][j] = 999;
+            }
+
+        System.out.println("Edges in MST:");
+        for (int k = 0; k < n - 1; k++) {
+            int min = 999, a = 0, b = 0;
+
+            for (int i = 0; i < n; i++)
+                for (int j = 0; j < n; j++)
+                    if (c[i][j] < min) {
+                        min = c[i][j];
+                        a = i;
+                        b = j;
+                    }
+
+            int u = find(p, a), v = find(p, b);
+
+            if (u != v) {
+                p[v] = u;
+                System.out.println((a + 1) + "-" + (b + 1) + "=" + min);
+                total += min;
+            } else {
+                k--;
+            }
+
+            c[a][b] = c[b][a] = 999;
+        }
+
+        System.out.println("Cost = " + total);
+        sc.close();
+    }
+}
