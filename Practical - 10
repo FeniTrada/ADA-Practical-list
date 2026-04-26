@@ -1,0 +1,33 @@
+import java.util.*;
+
+class Knap {
+    public static void main(String[] a) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter items: ");
+        int n = sc.nextInt();
+
+        int[] w = new int[n], v = new int[n];
+
+        System.out.println("Enter weights:");
+        for (int i = 0; i < n; i++) w[i] = sc.nextInt();
+
+        System.out.println("Enter values:");
+        for (int i = 0; i < n; i++) v[i] = sc.nextInt();
+
+        System.out.print("Enter capacity: ");
+        int W = sc.nextInt();
+
+        int[][] dp = new int[n + 1][W + 1];
+
+        for (int i = 1; i <= n; i++)
+            for (int j = 1; j <= W; j++)
+                dp[i][j] = (w[i-1] <= j) ?
+                    Math.max(dp[i-1][j], v[i-1] + dp[i-1][j - w[i-1]])
+                    : dp[i-1][j];
+
+        System.out.println("Maximum value = " + dp[n][W]);
+
+        sc.close();
+    }
+}
