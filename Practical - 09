@@ -1,0 +1,30 @@
+import java.util.*;
+
+class MinCoins {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter number of coins: ");
+        int n = sc.nextInt();
+
+        int[] coin = new int[n];
+        System.out.println("Enter coin values:");
+        for (int i = 0; i < n; i++)
+            coin[i] = sc.nextInt();
+
+        System.out.print("Enter amount: ");
+        int amt = sc.nextInt();
+
+        int[] dp = new int[amt + 1];
+        Arrays.fill(dp, 999);   // initialize with large value
+        dp[0] = 0;
+
+        for (int i = 0; i < n; i++)
+            for (int j = coin[i]; j <= amt; j++)
+                dp[j] = Math.min(dp[j], 1 + dp[j - coin[i]]);
+
+        System.out.println("Minimum coins = " + dp[amt]);
+
+        sc.close();
+    }
+}
